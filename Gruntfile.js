@@ -11,7 +11,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-bower-install');
 
   // Project configuration.
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
       js: {
         files: [
           {
-            src: 'src/**/*.js',
+            src: 'src/scripts/**/*.js',
             dest: 'app/js/schoolyard-simulation.js'
           }
         ]
@@ -108,9 +108,26 @@ module.exports = function(grunt) {
         src: ['lib/**/*.js', 'test/**/*.js']
       }
     },
+    sass: {                              // Task
+      dist: {                            // Target
+        options: {                       // Target options
+          style: 'expanded',
+          sourcemap: 'inline'
+        },
+        files: {                         // Dictionary of files
+          'app/css/main.css': 'src/styles/main.scss'
+        }
+      }
+    },
     watch: {
-      files: ['src/**/*.js', 'Gruntfile.js'],
-      tasks: ['concat:js']
+      styles: {
+        files: ['src/styles/*.scss'],
+        tasks: ['sass:dist']
+      },
+      scripts: {
+        files: ['src/scripts/**/*.js', 'Gruntfile.js'],
+        tasks: ['concat:js']
+      }
     }
   });
 

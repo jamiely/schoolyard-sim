@@ -3,9 +3,15 @@ body {
   font-family: Helvetica, Arial;
 }
 
+$game-container-padding: 10px;
+$game-width: 800px;
+$game-height: 600px;
+$menu-width: 200px;
+$menu-padding: 10px;
+
 #game-container {
-  width: 1010px;
-  height: 700px;
+  width: $game-width + $menu-width + $game-container-padding;
+  height: $game-height + 100px;
   margin: 0 auto;
   background-color: green;
   color: white;
@@ -17,17 +23,15 @@ body {
 }
 
 #game {
-  width: 800px;
+  width: $game-width;
   background-color: blue;
   display: inline-block;
 }
 
 #menu {
-  width: 180px;
-  padding: 0 10px;
+  width: $menu-width - 2 * $menu-padding;
+  padding: 0 $menu-padding;
   height: 600px;
   background-color: red;
   float: right;
 }
-
-/*# sourceMappingURL=main.css.map */
