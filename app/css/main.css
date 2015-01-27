@@ -4,7 +4,7 @@ body {
 }
 
 #game-container {
-  width: 1010px;
+  width: 900px;
   height: 700px;
   margin: 0 auto;
   background-color: green;
@@ -19,15 +19,7 @@ body {
 #game {
   width: 800px;
   background-color: blue;
-  display: inline-block;
-}
-
-#menu {
-  width: 180px;
-  padding: 0 10px;
-  height: 600px;
-  background-color: red;
-  float: right;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=main.css.map */

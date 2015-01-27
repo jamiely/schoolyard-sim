@@ -1,8 +1,8 @@
 {
 "version": 3,
-"mappings": "AAAA,IAAK;EACH,gBAAgB,EAAE,IAAI;EACtB,WAAW,EAAE,gBAAgB;;;AAS/B,eAAgB;EACd,KAAK,EAAE,MAAmD;EAC1D,MAAM,EAAE,KAAoB;EAC5B,MAAM,EAAE,MAAM;EACd,gBAAgB,EAAE,KAAK;EACvB,KAAK,EAAE,KAAK;;;AAGd,oBAAqB;EACnB,UAAU,EAAE,MAAM;EAClB,OAAO,EAAE,IAAI;;;AAGf,KAAM;EACJ,KAAK,EAnBM,KAAK;EAoBhB,gBAAgB,EAAE,IAAI;EACtB,OAAO,EAAE,YAAY;;;AAGvB,KAAM;EACJ,KAAK,EAAE,KAA+B;EACtC,OAAO,EAAE,MAAe;EACxB,MAAM,EAAE,KAAK;EACb,gBAAgB,EAAE,GAAG;EACrB,KAAK,EAAE,KAAK",
+"mappings": "AAAA,IAAK;EACH,gBAAgB,EAAE,IAAI;EACtB,WAAW,EAAE,gBAAgB;;;AAO/B,eAAgB;EACd,KAAK,EAAE,KAAqC;EAC5C,MAAM,EAAE,KAAoB;EAC5B,MAAM,EAAE,MAAM;EACd,gBAAgB,EAAE,KAAK;EACvB,KAAK,EAAE,KAAK;;;AAGd,oBAAqB;EACnB,UAAU,EAAE,MAAM;EAClB,OAAO,EAAE,IAAI;;;AAGf,KAAM;EACJ,KAAK,EAjBM,KAAK;EAkBhB,gBAAgB,EAAE,IAAI;EACtB,MAAM,EAAE,MAAM",
 "sources": ["src/styles/main.scss"],
-"sourcesContent": ["body {\n  background-color: #999;\n  font-family: Helvetica, Arial;\n}\n\n$game-container-padding: 10px;\n$game-width: 800px;\n$game-height: 600px;\n$menu-width: 200px;\n$menu-padding: 10px;\n\n#game-container {\n  width: $game-width + $menu-width + $game-container-padding;\n  height: $game-height + 100px;\n  margin: 0 auto;\n  background-color: green;\n  color: white;\n}\n\n#game-container > h1 {\n  text-align: center;\n  padding: 10px;\n}\n\n#game {\n  width: $game-width;\n  background-color: blue;\n  display: inline-block;\n}\n\n#menu {\n  width: $menu-width - 2 * $menu-padding;\n  padding: 0 $menu-padding;\n  height: 600px;\n  background-color: red;\n  float: right;\n}\n"],
+"sourcesContent": ["body {\n  background-color: #999;\n  font-family: Helvetica, Arial;\n}\n\n$game-container-padding: 100px;\n$game-width: 800px;\n$game-height: 600px;\n\n#game-container {\n  width: $game-width + $game-container-padding;\n  height: $game-height + 100px;\n  margin: 0 auto;\n  background-color: green;\n  color: white;\n}\n\n#game-container > h1 {\n  text-align: center;\n  padding: 10px;\n}\n\n#game {\n  width: $game-width;\n  background-color: blue;\n  margin: 0 auto;\n}\n\n"],
 "names": [],
 "file": "main.css"
 }

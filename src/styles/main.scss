@@ -3,14 +3,12 @@ body {
   font-family: Helvetica, Arial;
 }
 
-$game-container-padding: 10px;
+$game-container-padding: 100px;
 $game-width: 800px;
 $game-height: 600px;
-$menu-width: 200px;
-$menu-padding: 10px;
 
 #game-container {
-  width: $game-width + $menu-width + $game-container-padding;
+  width: $game-width + $game-container-padding;
   height: $game-height + 100px;
   margin: 0 auto;
   background-color: green;
@@ -25,13 +23,6 @@ $menu-padding: 10px;
 #game {
   width: $game-width;
   background-color: blue;
-  display: inline-block;
+  margin: 0 auto;
 }
 
-#menu {
-  width: $menu-width - 2 * $menu-padding;
-  padding: 0 $menu-padding;
-  height: 600px;
-  background-color: red;
-  float: right;
-}
