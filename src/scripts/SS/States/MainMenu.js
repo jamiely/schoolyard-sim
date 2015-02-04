@@ -31,13 +31,19 @@ SS.States.MainMenu = function(game) {
     });
   };
 
+  this.render = function() {
+    game.stage.backgroundColor = '#FFFFFF';
+  };
+
   this.shutdown = function() {
-    buttons.invoke('destroy');
+    try {
+      buttons.invoke('destroy');
+    } catch(e) {}
     buttonFactory = null;
   };
 
   function startGame() {
-    game.state.start('new-game');
+    game.state.start('playing');
   }
 
   function notImplemented() {
