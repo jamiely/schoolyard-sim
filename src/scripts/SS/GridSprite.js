@@ -34,7 +34,12 @@ SS.GridSprite = function(grid, game, x, y) {
     if(gridCell.x >= grid.width) return;
     if(gridCell.y >= grid.length) return;
 
-    onGridCellDown.dispatch(gridCell);
+    var adjustedCoordinates = {
+      x: gridCell.x * tileSize,
+      y: gridCell.y * tileSize
+    };
+
+    onGridCellDown.dispatch(gridCell, adjustedCoordinates, ptr);
   }
 
   function createGridGraphics() {

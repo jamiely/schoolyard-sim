@@ -19,8 +19,8 @@ SS.Grid = function(width, length) {
 
   // Determines if an attraction may be added at the passed point
   var mayAddAttraction = this.mayAddAttraction = function(pt, attraction) {
-    for(var w = 0; w < attraction.width; w ++) {
-      for(var le = 0; le < attraction.length; le ++) {
+    for(var w = 0; w < attraction.dimensions.width; w ++) {
+      for(var le = 0; le < attraction.dimensions.length; le ++) {
         if(!isEmpty(pt.x + w, pt.y + le)) return false;
       }
     }
@@ -29,8 +29,8 @@ SS.Grid = function(width, length) {
 
   // Attempts to add an attraction at the passed point
   var addAttraction = this.addAttraction = function(pt, attraction) {
-    for(var w = 0; w < attraction.width; w ++) {
-      for(var le = 0; le < attraction.length; le ++) {
+    for(var w = 0; w < attraction.dimensions.width; w ++) {
+      for(var le = 0; le < attraction.dimensions.length; le ++) {
         var x = pt.x + w,
           y = pt.y + le;
         if(!isEmpty(x, y)) {

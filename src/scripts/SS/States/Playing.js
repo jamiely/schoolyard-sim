@@ -5,8 +5,27 @@ SS.States.Playing = function(game) {
   var gridSprite;
   var selectedAttraction;
 
-  function onGridCellDown(index) {
+  function onGridCellDown(index, snappedCoordinates, pointer) {
     console.log(index);
+    if(!selectedAttraction) return;
+
+    if(! grid.mayAddAttraction(index, selectedAttraction)) {
+      console.log({
+        what: 'attraction cannot go at that location',
+        index: index,
+        attraction: selectedAttraction
+      });
+      return;
+    }
+
+    grid.addAttraction(index, selectedAttraction);
+
+    var attrSprite = new SS.AttractionSprite(32, selectedAttraction, game);
+
+    game.add.existing(attrSprite);
+    console.log(snappedCoordinates);
+    attrSprite.x = snappedCoordinates.x;
+    attrSprite.y = snappedCoordinates.y;
   }
 
   function selectAttraction(attr) {
