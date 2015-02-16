@@ -8,11 +8,16 @@ SS.States.Playing = function(game) {
   var stopwatch;
   var attractionInstanceId = 1;
   var simInfoSprite;
+  var attractionInstanceSprites = [];
 
   function nextAttractionInstanceId() {
     var a = attractionInstanceId;
     attractionInstanceId ++;
     return a;
+  }
+
+  function getCurrentAttractionInstances() {
+    return simulation.currentState.attractionInstances;
   }
 
   function getInstanceFromAttraction(attr) {
@@ -45,9 +50,6 @@ SS.States.Playing = function(game) {
     // track the attraction in the grid
     grid.addAttraction(index, selectedAttraction);
 
-    // add to simulation
-    addAttractionInstanceToSimulation(getInstanceFromAttraction(selectedAttraction));
-
     // setup the attraction sprite
     var attrSprite = new SS.AttractionSprite(32, selectedAttraction, game);
 
@@ -58,6 +60,11 @@ SS.States.Playing = function(game) {
     });
     attrSprite.x = snappedCoordinates.x;
     attrSprite.y = snappedCoordinates.y;
+
+    // add to simulation
+    var instance = getInstanceFromAttraction(selectedAttraction);
+    addAttractionInstanceToSimulation(instance);
+    attractionInstanceSprites[instance.id] = attrSprite;
   }
 
   function selectAttraction(attr) {
@@ -117,8 +124,18 @@ SS.States.Playing = function(game) {
     simInfoSprite.updateSimulationInfo(simulation);
   }
 
+  function updateAttractionInstance(attrInstance) {
+    var sprite = attractionInstanceSprites[attrInstance.id];
+    sprite.updateAttractionInstance(attrInstance);
+  }
+
+  function updateAttractions() {
+    getCurrentAttractionInstances().forEach(updateAttractionInstance);
+  }
+
   this.update = function() {
     stepSimulation();
+    updateAttractions();
   };
 
   this.render = function() {
