@@ -65,4 +65,4 @@ SS.GridSprite = function(grid, game, x, y) {
 };
 
 SS.GridSprite.prototype = Object.create(Phaser.Sprite.prototype);
-SS.GridSprite.prototype.constructor = SS.Grid;
+SS.GridSprite.prototype.constructor = SS.GridSprite;

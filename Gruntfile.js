@@ -27,21 +27,21 @@ module.exports = function(grunt) {
     bowerInstall: {
       default: {
         src: 'app/index.html'
+      },
+      test: { // https://github.com/stephenplusplus/grunt-wiredep/issues/35
+        src: 'karma.conf.js',
+        fileTypes: {
+          js: {
+            block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+            detect: {
+              js: /'.*\.js'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
+            }
+          }
+        }
       }
-      //test: { // https://github.com/stephenplusplus/grunt-wiredep/issues/35
-        //src: 'karma.conf.js',
-        //fileTypes: {
-          //js: {
-            //block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
-            //detect: {
-              //js: /'.*\.js'/gi
-            //},
-            //replace: {
-              //js: '\'{{filePath}}\','
-            //}
-          //}
-        //}
-      //}
     },    
     concat: {
       options: {
