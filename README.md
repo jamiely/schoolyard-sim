@@ -22,6 +22,11 @@ npm install -g karma-cli
 karma start --single-run
 ```
 
+Playing
+=======
+
+* Hit 1, 2, or 3 then click on the grid to place an attraction.
+
 Media
 =====
 
