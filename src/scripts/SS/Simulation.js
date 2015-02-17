@@ -64,9 +64,13 @@ SS.Simulation = function(initialState) {
     // Returns the attraction that the kid most prefers to enter.
     // Right now just returns the first attraction that is not full.
     function getPreferredAttraction(kid) {
-      return _.find(state.attractionInstances, function(attr) {
+      var available = _.filter(state.attractionInstances, function(attr) {
         return !attractionIsFull(attr);
       });
+
+      if(available.length === 0) return null;
+
+      return available[Math.floor(Math.random() * available.length)];
     }
 
     function attractionInstanceWithId(id) {

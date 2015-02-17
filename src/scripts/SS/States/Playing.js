@@ -9,6 +9,7 @@ SS.States.Playing = function(game) {
   var attractionInstanceId = 1;
   var simInfoSprite;
   var attractionInstanceSprites = [];
+  var childrenSprites;
 
   function nextAttractionInstanceId() {
     var a = attractionInstanceId;
@@ -18,6 +19,10 @@ SS.States.Playing = function(game) {
 
   function getCurrentAttractionInstances() {
     return simulation.currentState.attractionInstances;
+  }
+
+  function getCurrentChildren() {
+    return simulation.currentState.kids;
   }
 
   function getInstanceFromAttraction(attr) {
@@ -79,6 +84,9 @@ SS.States.Playing = function(game) {
     game.add.existing(gridSprite);
     gridSprite.onGridCellDown.add(onGridCellDown);
 
+    childrenSprites = new SS.KidsSprite(game, game.world.width - 150, 0);
+    game.add.existing(childrenSprites);
+
     simInfoSprite = new SS.SimInfoSprite(game, 0, 0);
     game.add.existing(simInfoSprite);
 
@@ -99,8 +107,9 @@ SS.States.Playing = function(game) {
     function createInitialState() {
       var fac = new SS.Simulation.StateFactory();
       var kids = [
-        { id: 1, health: 100, morale: 100 },
-        { id: 2, health: 100, morale: 100 }
+        { id: 1, health: 100, morale: 100, name: 'John' },
+        { id: 2, health: 100, morale: 100, name: 'Sally' },
+        { id: 3, health: 100, morale: 100, name: 'Jane' }
       ];
       var attractions = [
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 },
@@ -115,7 +124,7 @@ SS.States.Playing = function(game) {
   };
 
   function stepSimulation() {
-    if(stopwatch.getElapsedTime() < 5000) {
+    if(stopwatch.getElapsedTime() < 500) {
       return;
     }
 
@@ -133,9 +142,14 @@ SS.States.Playing = function(game) {
     getCurrentAttractionInstances().forEach(updateAttractionInstance);
   }
 
+  function updateChildren() {
+    childrenSprites.showKids(getCurrentChildren());
+  }
+
   this.update = function() {
     stepSimulation();
     updateAttractions();
+    updateChildren();
   };
 
   this.render = function() {

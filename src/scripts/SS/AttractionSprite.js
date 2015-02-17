@@ -10,7 +10,7 @@ SS.AttractionSprite = function(tileSize, attraction, game) {
 
   var capacityTextStyle = { 
     font: "10px Arial", 
-    fill: "#EEEEEE", 
+    fill: "#000000", 
     align: "center" 
   };
   var capacityText = game.add.text(0, 0, '0/0', capacityTextStyle);
@@ -30,7 +30,7 @@ SS.AttractionSprite = function(tileSize, attraction, game) {
   function createLabel() {
     var style = { 
       font: "20px Arial", 
-      fill: "#EEEEEE", 
+      fill: "#000000", 
       align: "center" 
     };
     var text = game.add.text(0, 10, attraction.id || 'unknown', style);
