@@ -10,6 +10,33 @@ SS.States.Playing = function(game) {
   var simInfoSprite;
   var attractionInstanceSprites = [];
   var childrenSprites;
+  var childrenGroup;
+
+  function updateChildren() {
+    var children = getCurrentChildren();
+    var i;
+    for(i = 0, count = childrenGroup.countLiving(); 
+        i < children.length; i ++) {
+      var sprite = null,
+        child = children[i];
+
+      if(count <= i) {
+        sprite = new SS.PersonSprite(game);
+        childrenGroup.addChild(sprite);
+        count ++;
+      } else {
+        sprite = childrenGroup.getChildAt(i);
+      }
+
+      sprite.visible = true;
+      //sprite.x = 100 + i * sprite.width;
+      sprite.updatePerson(child);
+    }
+
+    for(; i < count; i ++) {
+      childrenGroup.getChildAt(i).visible = false;
+    }
+  }
 
   function nextAttractionInstanceId() {
     var a = attractionInstanceId;
@@ -90,6 +117,8 @@ SS.States.Playing = function(game) {
     simInfoSprite = new SS.SimInfoSprite(game, 0, 0);
     game.add.existing(simInfoSprite);
 
+    childrenGroup = game.add.group();
+
     var mapping = _.object(
       _.zip(
         [Phaser.Keyboard.ONE, Phaser.Keyboard.TWO, Phaser.Keyboard.THREE],
@@ -107,9 +136,9 @@ SS.States.Playing = function(game) {
     function createInitialState() {
       var fac = new SS.Simulation.StateFactory();
       var kids = [
-        { id: 1, health: 100, morale: 100, name: 'John' },
-        { id: 2, health: 100, morale: 100, name: 'Sally' },
-        { id: 3, health: 100, morale: 100, name: 'Jane' }
+        { id: 1, health: 100, morale: 100, x: 100, y: 0, name: 'John' },
+        { id: 2, health: 100, morale: 100, x: 150, y: 0, name: 'Sally' },
+        { id: 3, health: 100, morale: 100, x: 200, y: 0, name: 'Jane' }
       ];
       var attractions = [
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 },
@@ -124,7 +153,7 @@ SS.States.Playing = function(game) {
   };
 
   function stepSimulation() {
-    if(stopwatch.getElapsedTime() < 500) {
+    if(stopwatch.getElapsedTime() < 5000) {
       return;
     }
 
@@ -142,9 +171,9 @@ SS.States.Playing = function(game) {
     getCurrentAttractionInstances().forEach(updateAttractionInstance);
   }
 
-  function updateChildren() {
-    childrenSprites.showKids(getCurrentChildren());
-  }
+  //function updateChildren() {
+    //childrenSprites.showKids(getCurrentChildren());
+  //}
 
   this.update = function() {
     stepSimulation();

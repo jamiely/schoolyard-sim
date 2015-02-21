@@ -20,157 +20,6 @@ SS.Simulation = function(initialState) {
     self.currentState.attractionInstances.push(attrInst);
   };
 
-  function attractionIsFull(attr) {
-    return attr.capacity <= attr.occupants.length;
-  }
-
-  function enterAttraction(kid, attr) {
-    if(kid.attractionInstanceId) throw 'kid is already on attraction';
-    if(attractionIsFull(attr)) throw 'attraction is already full';
-
-    log.debug({
-      message: 'Kid attempting to enter attraction',
-      kid: kid,
-      attr: attr
-    });
-
-    kid.attractionInstanceId = attr.id;
-    var slot = {
-      kidId: kid.id,
-      timeSpent: 0
-    };
-    attr.occupants.push(slot);
-    log.debug({
-      message: 'Kid entered attraction',
-      kid: kid,
-      attr: attr,
-      spacesRemaining: attr.capacity - attr.occupants.length
-    });
-
-
-    return {
-      attractionInstance: attr,
-      kid: kid,
-      slot: slot
-    };
-  }
-
-  function kidStepper(state) {
-    // determines if the kid is doing anything
-    function isOccupied(kid) {
-      return !! kid.attractionInstanceId;
-    }
-
-    // Returns the attraction that the kid most prefers to enter.
-    // Right now just returns the first attraction that is not full.
-    function getPreferredAttraction(kid) {
-      var available = _.filter(state.attractionInstances, function(attr) {
-        return !attractionIsFull(attr);
-      });
-
-      if(available.length === 0) return null;
-
-      return available[Math.floor(Math.random() * available.length)];
-    }
-
-    function attractionInstanceWithId(id) {
-      return _.find(state.attractionInstances, function(ai) {
-        return ai.id === id;
-      });
-    }
-
-    function attractionSlot(kid, attraction) {
-      return _.find(attraction.occupants, function(occupant) {
-        return occupant.kidId === kid.id;
-      });
-    }
-
-    function kidFinishedWithAttraction(kid) {
-      var attraction = attractionInstanceWithId(kid.attractionInstanceId);
-      if(!attraction) throw 'no attraction available.';
-
-      var slot = attractionSlot(kid, attraction);
-      if(!slot) throw 'no slot available.';
-
-      log.debug({
-        message: 'is kid finished with attraction?',
-        slot: slot,
-        attraction: attraction,
-        duration: attraction.duration,
-        timeSpent: slot.timeSpent
-      });
-      if(slot.timeSpent > attraction.duration) {
-        return {
-          kid: kid,
-          attraction: attraction,
-          slot: slot
-        };
-      }
-
-      return false;
-    }
-
-    function exitAttraction(rideInfo) {
-      log.debug({
-        message: 'Exiting attraction',
-        rideInfo: rideInfo,
-        attraction: rideInfo.attraction,
-        kid: rideInfo.kid
-      });
-      var attraction = rideInfo.attraction;
-      var kid = rideInfo.kid;
-      var slot = rideInfo.slot;
-
-      attraction.occupants = _.without(attraction.occupants, slot);
-      kid.attractionInstanceId = null;
-    }
-
-    return function(kid) {
-      log.debug({
-        message: 'Stepping kid',
-        kid: kid
-      });
-
-      if(isOccupied(kid)) {
-        log.debug({
-          message: 'Kid is occupied',
-          kid: kid
-        });
-        var result = kidFinishedWithAttraction(kid);
-        if(result) {
-          exitAttraction(result);
-          kid.health += 10;
-          kid.morale += 10;
-        } else {
-          // stay on attraction
-        }
-        return kid;
-      } 
-
-      var preferredAttraction = getPreferredAttraction(kid);
-      if(preferredAttraction) {
-        // get on attraction
-        enterAttraction(kid, preferredAttraction);
-        kid.morale += 10;
-      } else {
-        // kid can't get on attraction, is he pissed?
-        kid.health -= 5;
-        kid.morale -= 20;
-        log.debug({
-          message: 'Stepping kid: couldnt enter attraction',
-          kid: kid
-        });
-      }
-
-      log.debug({
-        message: 'Finished Stepping kid',
-        kid: kid
-      });
-
-      return kid;
-    };
-  }
-
   function incrementSlotTimeSpent(slot) {
     slot.timeSpent ++;
   }
@@ -205,6 +54,11 @@ SS.Simulation = function(initialState) {
 
     var newState = _.cloneDeep(previousState);
     tickState(newState);
+
+    var kidStepper = function(s) {
+      var stepper = new SS.Simulation.KidStepper(s);
+      return _.bind(stepper.stepFunction, stepper);
+    };
 
     _.each(newState.kids, kidStepper(newState));
     _.each(newState.attractionInstances, attractionInstanceStepper(newState));
