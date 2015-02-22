@@ -3,7 +3,8 @@ SS.PersonSprite = function(game) {
 
   var self = this,
     radius = 30,
-    half = radius / 2;
+    half = radius / 2,
+    lastColor = 0x666666;
 
   var graphics = createGraphics(),
     label = createText();
@@ -19,11 +20,28 @@ SS.PersonSprite = function(game) {
     return t;
   }
 
+  function setBackgroundColor(g, color) {
+    if(color === lastColor) return;
+
+    lastColor = color;
+    g.clear();
+    g.beginFill(color, 0.5);
+    g.drawCircle(half, half, radius);
+  }
+
+  function getColorFromHealth(health) {
+    if(health >= 80) {
+      return 0x00ff00;
+    } else if(health >= 30) {
+      return 0xff9900;
+    }
+    return 0xff0000;
+  }
+
   function createGraphics() {
     var g = game.add.graphics();
 
-    g.beginFill(0xFF9900, 0.5);
-    g.drawCircle(half, half, radius);
+    setBackgroundColor(g, 0xFF9900);
     self.addChild(g);
 
     return g;
@@ -34,6 +52,7 @@ SS.PersonSprite = function(game) {
     self.x = person.location.x;
     self.y = person.location.y;
     label.text = person.id;
+    setBackgroundColor(graphics, getColorFromHealth(person.health));
   };
 };
 

@@ -13,6 +13,8 @@ SS.States.Playing = function(game) {
   var childrenGroup;
 
   function updateChildren() {
+    childrenSprites.showKids(getCurrentChildren());
+    childrenGroup.parent.bringToTop(childrenGroup);
     var children = getCurrentChildren();
     var i;
     for(i = 0, count = childrenGroup.countLiving(); 
@@ -27,6 +29,8 @@ SS.States.Playing = function(game) {
       } else {
         sprite = childrenGroup.getChildAt(i);
       }
+
+      //sprite.parent.bringToTop(sprite);
 
       sprite.visible = true;
       //sprite.x = 100 + i * sprite.width;
@@ -181,10 +185,6 @@ SS.States.Playing = function(game) {
   function updateAttractions() {
     getCurrentAttractionInstances().forEach(updateAttractionInstance);
   }
-
-  //function updateChildren() {
-    //childrenSprites.showKids(getCurrentChildren());
-  //}
 
   this.update = function() {
     stepSimulation();

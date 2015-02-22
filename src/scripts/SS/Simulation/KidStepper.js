@@ -99,6 +99,10 @@ SS.Simulation.KidStepper = function(state) {
     kid.state = Kid.States.Roaming;
   }
 
+  function augmentHealth(kid, delta) {
+    kid.health = Math.min(kid.health + delta, 100);
+  }
+
   function handleOccupied(kid) {
     log.debug({
       message: 'Kid is occupied',
@@ -107,7 +111,7 @@ SS.Simulation.KidStepper = function(state) {
     var result = kidFinishedWithAttraction(kid);
     if(result) {
       exitAttraction(result);
-      kid.health += 10;
+      augmentHealth(kid, 20);
       kid.morale += 10;
     } else {
       // stay on attraction
@@ -152,7 +156,7 @@ SS.Simulation.KidStepper = function(state) {
       kid.morale += 10;
     } else {
       // kid can't get on attraction, is he pissed?
-      kid.health -= 5;
+      augmentHealth(kid, -5);
       kid.morale -= 20;
       log.debug({
         message: 'Stepping kid: couldnt enter attraction',
@@ -211,7 +215,7 @@ SS.Simulation.KidStepper = function(state) {
       kid = handleAcquiringAndIsClose(kid);
     } else {
       // expend some health getting to the attraction
-      kid.health -= 1;
+      augmentHealth(kid, -1);
       goTowardsAttraction(kid);
     }
 
