@@ -22,7 +22,7 @@ SS.PersonSprite = function(game) {
   function createGraphics() {
     var g = game.add.graphics();
 
-    g.beginFill(0xFF9900, 1);
+    g.beginFill(0xFF9900, 0.5);
     g.drawCircle(half, half, radius);
     self.addChild(g);
 
@@ -31,8 +31,8 @@ SS.PersonSprite = function(game) {
 
   this.updatePerson = function(person) {
     //TODO
-    self.x = person.x;
-    self.y = person.y;
+    self.x = person.location.x;
+    self.y = person.location.y;
     label.text = person.id;
   };
 };

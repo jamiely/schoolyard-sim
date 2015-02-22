@@ -52,13 +52,15 @@ SS.States.Playing = function(game) {
     return simulation.currentState.kids;
   }
 
-  function getInstanceFromAttraction(attr) {
+  function getInstanceFromAttraction(attr, coords) {
     return {
       id: nextAttractionInstanceId(),
       attractionId: attr.id,
       occupants: [],
       capacity: attr.capacity,
-      duration: attr.duration
+      duration: attr.duration,
+      gridLocation: coords.gridLocation,
+      location: coords.location
     };
   }
 
@@ -94,7 +96,10 @@ SS.States.Playing = function(game) {
     attrSprite.y = snappedCoordinates.y;
 
     // add to simulation
-    var instance = getInstanceFromAttraction(selectedAttraction);
+    var instance = getInstanceFromAttraction(selectedAttraction, {
+      location: snappedCoordinates,
+      gridLocation: index
+    });
     addAttractionInstanceToSimulation(instance);
     attractionInstanceSprites[instance.id] = attrSprite;
   }
@@ -136,14 +141,20 @@ SS.States.Playing = function(game) {
     function createInitialState() {
       var fac = new SS.Simulation.StateFactory();
       var kids = [
-        { id: 1, health: 100, morale: 100, x: 100, y: 0, name: 'John' },
-        { id: 2, health: 100, morale: 100, x: 150, y: 0, name: 'Sally' },
-        { id: 3, health: 100, morale: 100, x: 200, y: 0, name: 'Jane' }
+        { id: 1, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: new Phaser.Point(100, 0), name: 'John' },
+        { id: 2, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: new Phaser.Point(150, 0), name: 'Sally' },
+        { id: 3, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: new Phaser.Point(200, 0), name: 'Jane' }
       ];
       var attractions = [
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 },
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 }
       ];
+      log.debug({
+        message: 'created initial state',
+        kids: kids,
+        attractions: attractions,
+        states: SS.Simulation.Kid.States
+      });
       return fac.createState(kids, attractions);
     }
 
@@ -153,7 +164,7 @@ SS.States.Playing = function(game) {
   };
 
   function stepSimulation() {
-    if(stopwatch.getElapsedTime() < 5000) {
+    if(stopwatch.getElapsedTime() < 250) {
       return;
     }
 
