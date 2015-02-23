@@ -100,7 +100,11 @@ SS.Simulation.KidStepper = function(state) {
   }
 
   function augmentHealth(kid, delta) {
-    kid.health = Math.min(kid.health + delta, 100);
+    kid.health = Phaser.Math.clamp(kid.health + delta, 0, 100);
+  }
+
+  function adjustMorale(kid, delta) {
+    kid.morale = Phaser.Math.clamp(kid.morale + delta, 0, 100);
   }
 
   function handleOccupied(kid) {
@@ -112,7 +116,7 @@ SS.Simulation.KidStepper = function(state) {
     if(result) {
       exitAttraction(result);
       augmentHealth(kid, 20);
-      kid.morale += 10;
+      adjustMorale(kid, 10);
     } else {
       // stay on attraction
     }
@@ -126,7 +130,7 @@ SS.Simulation.KidStepper = function(state) {
       kid.state = Kid.States.Acquiring;
     } else {
       // no attractions available, is he pissed?
-      kid.morale -= 10;
+      adjustMorale(kid, -5);
       log.debug({
         message: 'Stepping kid: couldnt enter attraction',
         kid: kid
@@ -153,11 +157,11 @@ SS.Simulation.KidStepper = function(state) {
       // get on attraction
       SS.Simulation.Util.enterAttraction(kid, preferredAttraction);
       kid.preferredAttraction = null;
-      kid.morale += 10;
+      adjustMorale(kid, 10);
     } else {
       // kid can't get on attraction, is he pissed?
       augmentHealth(kid, -5);
-      kid.morale -= 20;
+      adjustMorale(kid, -10);
       log.debug({
         message: 'Stepping kid: couldnt enter attraction',
         kid: kid
@@ -217,6 +221,7 @@ SS.Simulation.KidStepper = function(state) {
       // expend some health getting to the attraction
       augmentHealth(kid, -1);
       goTowardsAttraction(kid);
+      adjustMorale(kid, -1);
     }
 
     log.debug({

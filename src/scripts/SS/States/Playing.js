@@ -145,9 +145,9 @@ SS.States.Playing = function(game) {
     function createInitialState() {
       var fac = new SS.Simulation.StateFactory();
       var kids = [
-        { id: 1, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: new Phaser.Point(100, 0), name: 'John' },
-        { id: 2, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: new Phaser.Point(150, 0), name: 'Sally' },
-        { id: 3, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: new Phaser.Point(200, 0), name: 'Jane' }
+        { id: 1, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'John' },
+        { id: 2, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Sally' },
+        { id: 3, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jane' }
       ];
       var attractions = [
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 },
