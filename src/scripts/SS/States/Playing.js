@@ -148,7 +148,20 @@ SS.States.Playing = function(game) {
         { id: 1, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'John' },
         { id: 2, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Sally' },
         { id: 3, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jane' }
+        //{ id: 4, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Jacob' },
+        //{ id: 5, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Isaac' },
+        //{ id: 6, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Noah' },
+        //{ id: 7, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Abraham' },
+        //{ id: 8, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Soloman' },
+        //{ id: 9, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'David' },
+        //{ id: 10, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jason' },
+        //{ id: 11, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Jack' },
+        //{ id: 12, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jonah' }
       ];
+      kids.forEach(function(kid) {
+        kid.location.x = Math.random() * 500;
+        kid.location.y = Math.random() * 400;
+      });
       var attractions = [
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 },
         //{ attractionId: 1, occupants: [], capacity: 4, duration: 10 }
