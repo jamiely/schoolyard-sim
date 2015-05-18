@@ -1,4 +1,4 @@
-SS.Grid = function(width, length) {
+module.exports = function(width, length) {
   this.width = width;
   this.length = length;
 

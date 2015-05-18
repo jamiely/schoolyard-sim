@@ -2,3 +2,7 @@ bower_components
 node_modules
 app/js/schoolyard-simulation.js
 .sass-cache
+dist
+app/js/*
+app/index.html
+.tmp

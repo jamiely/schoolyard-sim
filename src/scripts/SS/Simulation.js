@@ -1,5 +1,7 @@
+var Simulation = function(initialState) {
 
-SS.Simulation = function(initialState) {
+  var KidStepper = require('./Simulation/KidStepper');
+
   var self = this;
 
   this.currentState = initialState;
@@ -56,7 +58,7 @@ SS.Simulation = function(initialState) {
     tickState(newState);
 
     var kidStepper = function(s) {
-      var stepper = new SS.Simulation.KidStepper(s);
+      var stepper = new KidStepper(s);
       return _.bind(stepper.stepFunction, stepper);
     };
 
@@ -72,19 +74,10 @@ SS.Simulation = function(initialState) {
   }
 };
 
-SS.Simulation.StateFactory = function() {
-  // @param kids
-  // @param attractionInstances These are attractions placed on the
-  //                            board.
-  this.createState = function(kids, attractionInstances) {
-    return {
-      tick: 0,
-      kids: _.cloneDeep(kids),
-      attractionInstances: _.cloneDeep(attractionInstances)
-    };
-  };
-};
+Simulation.StateFactory = require('./Simulation/StateFactory');
+Simulation.Kid = require('./Simulation/Kid');
 
+module.exports = Simulation;
 
 // we'll just use vanilla objects to represent
 // simulation objects, so they can be more easily copied.

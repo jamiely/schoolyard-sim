@@ -1,4 +1,4 @@
-SS.GridSprite = function(grid, game, x, y) {
+GridSprite = function(grid, game, x, y) {
   Phaser.Sprite.call(this, game, x, y);
 
   var onGridCellDown = this.onGridCellDown = new Phaser.Signal();
@@ -64,5 +64,8 @@ SS.GridSprite = function(grid, game, x, y) {
   };
 };
 
-SS.GridSprite.prototype = Object.create(Phaser.Sprite.prototype);
-SS.GridSprite.prototype.constructor = SS.GridSprite;
+GridSprite.prototype = Object.create(Phaser.Sprite.prototype);
+GridSprite.prototype.constructor = GridSprite;
+
+module.exports = GridSprite;
+

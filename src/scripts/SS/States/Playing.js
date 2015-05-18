@@ -1,5 +1,15 @@
 // We want to display the field
-SS.States.Playing = function(game) {
+module.exports = function(game) {
+
+  var PersonSprite = require('../PersonSprite');
+  var AttractionSprite = require('../AttractionSprite');
+  var Grid = require('../Grid');
+  var GridSprite = require('../GridSprite');
+  var KidsSprite = require('../KidsSprite');
+  var SimInfoSprite = require('../SimInfoSprite');
+  var Attractions = require('../Attractions');
+  var Simulation = require('../Simulation');
+  var Stopwatch = require('../../Stopwatch');
 
   var grid;
   var gridSprite;
@@ -23,7 +33,7 @@ SS.States.Playing = function(game) {
         child = children[i];
 
       if(count <= i) {
-        sprite = new SS.PersonSprite(game);
+        sprite = new PersonSprite(game);
         childrenGroup.addChild(sprite);
         count ++;
       } else {
@@ -73,11 +83,11 @@ SS.States.Playing = function(game) {
   }
 
   function onGridCellDown(index, snappedCoordinates, pointer) {
-    console.log(index);
+    log.debug(index);
     if(!selectedAttraction) return;
 
     if(! grid.mayAddAttraction(index, selectedAttraction)) {
-      console.log({
+      log.debug({
         what: 'attraction cannot go at that location',
         index: index,
         attraction: selectedAttraction
@@ -89,7 +99,7 @@ SS.States.Playing = function(game) {
     grid.addAttraction(index, selectedAttraction);
 
     // setup the attraction sprite
-    var attrSprite = new SS.AttractionSprite(32, selectedAttraction, game);
+    var attrSprite = new AttractionSprite(32, selectedAttraction, game);
 
     game.add.existing(attrSprite);
     log.debug({
@@ -110,20 +120,20 @@ SS.States.Playing = function(game) {
 
   function selectAttraction(attr) {
     selectedAttraction = attr;
-    console.log(selectedAttraction);
+    log.debug(selectedAttraction);
   }
 
   this.create = function() {
-    grid = new SS.Grid(20, 16);
+    grid = new Grid(20, 16);
 
-    gridSprite = new SS.GridSprite(grid, game, 0, 0);
+    gridSprite = new GridSprite(grid, game, 0, 0);
     game.add.existing(gridSprite);
     gridSprite.onGridCellDown.add(onGridCellDown);
 
-    childrenSprites = new SS.KidsSprite(game, game.world.width - 150, 0);
+    childrenSprites = new KidsSprite(game, game.world.width - 150, 0);
     game.add.existing(childrenSprites);
 
-    simInfoSprite = new SS.SimInfoSprite(game, 0, 0);
+    simInfoSprite = new SimInfoSprite(game, 0, 0);
     game.add.existing(simInfoSprite);
 
     childrenGroup = game.add.group();
@@ -131,11 +141,11 @@ SS.States.Playing = function(game) {
     var mapping = _.object(
       _.zip(
         [Phaser.Keyboard.ONE, Phaser.Keyboard.TWO, Phaser.Keyboard.THREE],
-        SS.Attractions));
+        Attractions));
 
-    console.log(mapping);
+    log.debug(mapping);
     _.each(mapping, function(attraction, keyboardCode) {
-      console.log(arguments);
+      log.debug(arguments);
       game.input.keyboard.addKey(keyboardCode).onDown.add(function() {
         selectAttraction(attraction);
       });
@@ -143,20 +153,20 @@ SS.States.Playing = function(game) {
 
     // testing
     function createInitialState() {
-      var fac = new SS.Simulation.StateFactory();
+      var fac = new Simulation.StateFactory();
       var kids = [
-        { id: 1, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'John' },
-        { id: 2, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Sally' },
-        { id: 3, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jane' }
-        //{ id: 4, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Jacob' },
-        //{ id: 5, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Isaac' },
-        //{ id: 6, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Noah' },
-        //{ id: 7, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Abraham' },
-        //{ id: 8, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Soloman' },
-        //{ id: 9, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'David' },
-        //{ id: 10, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jason' },
-        //{ id: 11, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Jack' },
-        //{ id: 12, state: SS.Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jonah' }
+        { id: 1, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'John' },
+        { id: 2, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Sally' },
+        { id: 3, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jane' }
+        //{ id: 4, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Jacob' },
+        //{ id: 5, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Isaac' },
+        //{ id: 6, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Noah' },
+        //{ id: 7, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Abraham' },
+        //{ id: 8, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 100, y: 0}, name: 'Soloman' },
+        //{ id: 9, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'David' },
+        //{ id: 10, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jason' },
+        //{ id: 11, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 500, y: 0}, name: 'Jack' },
+        //{ id: 12, state: Simulation.Kid.States.Roaming, health: 100, morale: 100, location: {x: 250, y: 300}, name: 'Jonah' }
       ];
       kids.forEach(function(kid) {
         kid.location.x = Math.random() * 500;
@@ -170,14 +180,14 @@ SS.States.Playing = function(game) {
         message: 'created initial state',
         kids: kids,
         attractions: attractions,
-        states: SS.Simulation.Kid.States
+        states: Simulation.Kid.States
       });
       return fac.createState(kids, attractions);
     }
 
-    log.enableAll();
+    log.setLevel(log.levels.ERROR);
     stopwatch = new Stopwatch();
-    simulation = new SS.Simulation(createInitialState());
+    simulation = new Simulation(createInitialState());
   };
 
   function stepSimulation() {

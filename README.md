@@ -22,6 +22,13 @@ npm install -g karma-cli
 karma start --single-run
 ```
 
+Building
+========
+
+```javascript
+grunt clean build:dist
+```
+
 Playing
 =======
 

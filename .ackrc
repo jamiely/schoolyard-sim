@@ -1,0 +1,6 @@
+--ignore-dir=node_modules
+--ignore-dir=app/js
+--ignore-dir=dist
+--ignore-dir=app/bower_components
+--ignore-dir=.tmp
+

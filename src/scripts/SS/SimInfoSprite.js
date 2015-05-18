@@ -1,4 +1,4 @@
-SS.SimInfoSprite = function(game, x, y) {
+var SimInfoSprite = function(game, x, y) {
   Phaser.Sprite.call(this, game, x, y);
 
   var gameClockStyle = { 
@@ -14,5 +14,8 @@ SS.SimInfoSprite = function(game, x, y) {
   };
 };
 
-SS.SimInfoSprite.prototype = Object.create(Phaser.Sprite.prototype);
-SS.SimInfoSprite.prototype.constructor = SS.SimInfoSprite;
+SimInfoSprite.prototype = Object.create(Phaser.Sprite.prototype);
+SimInfoSprite.prototype.constructor = SimInfoSprite;
+
+module.exports = SimInfoSprite;
+

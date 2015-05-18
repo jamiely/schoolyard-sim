@@ -4,9 +4,10 @@
 //               towards it.
 // * riding    - This means that the kid is riding an attraction.
 // * roaming   - The kid is just exploring. This is the default state.
-SS.Simulation.KidStepper = function(state) {
-  var Sim = SS.Simulation;
-  var Kid = Sim.Kid;
+module.exports = function(state) {
+  var Sim = require('../Simulation');
+  var Kid = require('./Kid');
+  var Util = require('./Util');
 
   // determines if the kid is doing anything
   function isOccupied(kid) {
@@ -25,7 +26,7 @@ SS.Simulation.KidStepper = function(state) {
   // Right now just returns the first attraction that is not full.
   function getPreferredAttraction(kid) {
     var available = _.filter(state.attractionInstances, function(attr) {
-      return !SS.Simulation.Util.attractionIsFull(attr);
+      return !Util.attractionIsFull(attr);
     });
 
     if(available.length === 0) return null;
@@ -148,14 +149,14 @@ SS.Simulation.KidStepper = function(state) {
   }
 
   function canUseAttraction(kid, attr) {
-    return !Sim.Util.attractionIsFull(attr);
+    return !Util.attractionIsFull(attr);
   }
 
   function handleAcquiringAndIsClose(kid) {
     var preferredAttraction = kid.preferredAttraction;
     if(canUseAttraction(kid, preferredAttraction)) {
       // get on attraction
-      SS.Simulation.Util.enterAttraction(kid, preferredAttraction);
+      Util.enterAttraction(kid, preferredAttraction);
       kid.preferredAttraction = null;
       adjustMorale(kid, 10);
     } else {

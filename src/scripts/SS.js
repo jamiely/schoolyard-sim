@@ -1,2 +1,4 @@
-var SS = {};
+module.exports = {
+  App: require('./SS/App')
+};
 

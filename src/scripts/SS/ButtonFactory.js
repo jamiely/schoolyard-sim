@@ -1,4 +1,4 @@
-SS.ButtonFactory = function(game) {
+module.exports = function(game) {
   var uiAtlasName = 'ui';
 
   this.preload = function() {

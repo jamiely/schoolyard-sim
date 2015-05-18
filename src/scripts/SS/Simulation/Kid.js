@@ -1,4 +1,4 @@
-SS.Simulation.Kid = {
+module.exports = {
   // Possible transitions
   // acquiring => riding
   // roaming => acquiring

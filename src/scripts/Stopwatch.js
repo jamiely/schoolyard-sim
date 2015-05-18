@@ -1,4 +1,4 @@
-var Stopwatch = function() {
+module.exports = function() {
   var self = this,
     lastTime = null;
 

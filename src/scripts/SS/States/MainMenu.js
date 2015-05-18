@@ -1,5 +1,6 @@
-SS.States.MainMenu = function(game) {
-  var buttonFactory = new SS.ButtonFactory(game);
+module.exports = function(game) {
+  var ButtonFactory = require('../ButtonFactory');
+  var buttonFactory = new ButtonFactory(game);
   var buttonDefinitions = [{
     label: 'Start',
     callback: startGame

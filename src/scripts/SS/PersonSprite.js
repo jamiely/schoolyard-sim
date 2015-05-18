@@ -1,4 +1,4 @@
-SS.PersonSprite = function(game) {
+PersonSprite = function(game) {
   Phaser.Sprite.call(this, game, 0, 0);
 
   var EXPRESSIONS = {
@@ -34,7 +34,7 @@ SS.PersonSprite = function(game) {
       x = radius + eighth,
       vpadding = eighth;
 
-    console.log({
+    log.debug({
       height: height,
       totalHeight: totalHeight
     });
@@ -163,6 +163,7 @@ SS.PersonSprite = function(game) {
   };
 };
 
-SS.PersonSprite.prototype = Object.create(Phaser.Sprite.prototype);
-SS.PersonSprite.prototype.constructor = SS.PersonSprite;
+PersonSprite.prototype = Object.create(Phaser.Sprite.prototype);
+PersonSprite.prototype.constructor = PersonSprite;
 
+module.exports = PersonSprite;

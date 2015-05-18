@@ -1,4 +1,4 @@
-SS.AttractionSprite = function(tileSize, attraction, game) {
+var AttractionSprite = function(tileSize, attraction, game) {
   Phaser.Sprite.call(this, game, 0, 0);
 
   var width = tileSize * attraction.dimensions.width;
@@ -39,6 +39,8 @@ SS.AttractionSprite = function(tileSize, attraction, game) {
   }
 };
 
-SS.AttractionSprite.prototype = Object.create(Phaser.Sprite.prototype);
-SS.AttractionSprite.prototype.constructor = SS.AttractionSprite;
+AttractionSprite.prototype = Object.create(Phaser.Sprite.prototype);
+AttractionSprite.prototype.constructor = AttractionSprite;
+
+module.exports = AttractionSprite;
 
