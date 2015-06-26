@@ -1,5 +1,7 @@
 // Karma configuration
 // Generated on Sat Feb 14 2015 21:07:59 GMT-0500 (EST)
+var webpackConfig = require('./webpack.config.js');
+var _ = require('lodash');
 
 module.exports = function(config) {
   config.set({
@@ -20,7 +22,7 @@ module.exports = function(config) {
       'app/bower_components/lodash/lodash.js',
       'app/bower_components/loglevel/dist/loglevel.min.js',
       // endbower
-      'app/js/*.js',
+      'dist/js/*.js',
       // test files
       'node_modules/chai/chai.js',
       'tests/**/*.js'
@@ -34,6 +36,17 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'tests/**/*.js': ['webpack', 'sourcemap']
+    },
+
+
+    webpack: _.extend(webpackConfig, {
+      devtool: 'inline-source-map'
+    }),
+
+
+    webpackMiddleware: {
+      noInfo: true
     },
 
 
@@ -63,6 +76,14 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
+
+
+    plugins: [
+      require('karma-webpack'),
+      require('karma-phantomjs-launcher'),
+      require('karma-sourcemap-loader'),
+      require('karma-mocha')
+    ],
 
 
     // Continuous Integration mode
